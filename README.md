@@ -21,9 +21,7 @@
 
 A continuación se detalla la estructura lógica de la base de datos diseñada para este proyecto:
 
-<p align="center">
-  <img src="docs/db_schema.png" alt="Modelo Entidad Relación" width="800">
-</p>
+![Modelo Entidad Relación](./docs/db_schema.png)
 
 
 ## 🚀 Instalación y Configuración
@@ -35,7 +33,7 @@ Asegúrate de tener instaladas las extensiones de PHP: `pdo_pgsql`, `gd`, `zip`.
 
 ### 2. Clonar e Instalar
 ```bash
-git clone <url-del-repositorio>
+git clone https://github.com/Lalocal1210/reporte-orienta
 cd reporte-orienta
 composer install
 
@@ -62,7 +60,7 @@ SuperAdmin: Acceso total a todas las plantas y empresas a nivel nacional.
 
 Operador de Planta: Acceso restringido únicamente a los incidentes de su ubicación asignada.
 
-🧠 Decisiones Técnicas (Senior Level)
+🧠 Decisiones Técnicas
 Query Builder vs ORM: Para la exportación a Excel, se evitó Eloquent para prevenir el desbordamiento de memoria (RAM) al hidratar miles de modelos, optando por consultas directas y eficientes.
 
 Manejo de Errores: Se implementó un middleware de captura para procesos de exportación que alimenta la tabla historial_fallos, garantizando que el sistema nunca "muera" ante el usuario final.
