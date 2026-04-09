@@ -14,9 +14,7 @@ use App\Http\Controllers\Api\IncidenteController;
 // Endpoint principal: Extrae y filtra los incidentes según el rol y planta
 Route::get('/incidentes', [IncidenteController::class, 'index']);
 Route::get('/incidentes/exportar', [App\Http\Controllers\Api\IncidenteController::class, 'exportar']);
-Route::get('/debug-errores', function () {
-    return DB::table('historial_fallos')->latest()->get();
-});
+
 //rutas defecto
 Route::get('/user', function (Request $request) {
     return $request->user();

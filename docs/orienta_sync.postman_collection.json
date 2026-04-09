@@ -1,0 +1,105 @@
+{
+    "info": {
+        "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+        "name": "Orienta Sync API",
+        "description": "Colección para probar los endpoints de gestión de incidentes y exportación con simulación de roles.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Listar Incidentes (Como Admin)",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "X-Usuario-Simulado",
+                        "value": "1",
+                        "description": "ID del SuperAdmin"
+                    },
+                    {
+                        "key": "Accept",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "http://127.0.0.1:8000/api/incidentes",
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "incidentes"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Listar Incidentes (Como Operador Planta 1)",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "X-Usuario-Simulado",
+                        "value": "2",
+                        "description": "ID de un empleado asignado a Planta 1"
+                    },
+                    {
+                        "key": "Accept",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "http://127.0.0.1:8000/api/incidentes",
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "incidentes"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Exportar Excel (Admin)",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "X-Usuario-Simulado",
+                        "value": "1"
+                    }
+                ],
+                "url": {
+                    "raw": "http://127.0.0.1:8000/api/incidentes/exportar",
+                    "protocol": "http",
+                    "host": [
+                        "127",
+                        "0",
+                        "0",
+                        "1"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "incidentes",
+                        "exportar"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}

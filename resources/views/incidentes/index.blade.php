@@ -31,7 +31,7 @@
         .sidebar-item.active {
             background: #4f46e5;
             color: white;
-            shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.39);
+            box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.39);
         }
     </style>
 </head>
@@ -51,7 +51,7 @@
         </div>
 
         <nav class="flex-1 px-4 space-y-2 mt-4">
-            <a href="#"
+            <a href="/"
                 class="sidebar-item active flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all">
                 <i class="fas fa-th-large w-5"></i> Dashboard
             </a>
@@ -63,19 +63,10 @@
                 class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 font-medium transition-all">
                 <i class="fas fa-building w-5"></i> Plantas
             </a>
-            <a href="#"
-                class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 font-medium transition-all">
-                <i class="fas fa-users w-5"></i> Empleados
-            </a>
         </nav>
 
-        <div class="p-6 border-t border-slate-100">
-            <div class="bg-slate-50 rounded-2xl p-4">
-                <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-2">Soporte Técnico</p>
-                <button class="text-indigo-600 text-sm font-bold flex items-center gap-2">
-                    <i class="fas fa-headset"></i> Centro de ayuda
-                </button>
-            </div>
+        <div class="p-6 border-t border-slate-100 text-center">
+            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Desarrollado por Calde</p>
         </div>
     </aside>
 
@@ -83,30 +74,31 @@
 
         <header
             class="h-20 bg-white/80 glass border-b border-slate-200 px-8 flex items-center justify-between sticky top-0 z-40">
-            <div class="relative w-96">
-                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                <input type="text" placeholder="Buscar incidentes o folios..."
-                    class="w-full bg-slate-100 border-none rounded-2xl py-2.5 pl-11 pr-4 text-sm focus:ring-2 focus:ring-indigo-500 transition-all">
+            <div class="flex items-center gap-8">
+                <form action="/" method="GET"
+                    class="flex items-center gap-3 bg-slate-100 px-4 py-1.5 rounded-2xl border border-slate-200">
+                    <i class="fas fa-user-secret text-indigo-500 text-sm"></i>
+                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-wider">Simular
+                        Contexto:</span>
+                    <select name="simular_usuario" onchange="this.form.submit()"
+                        class="bg-transparent border-none text-xs font-bold text-slate-700 focus:ring-0 cursor-pointer">
+                        @foreach($usuarios_demo as $u)
+                            <option value="{{ $u->id }}" {{ session('user_id') == $u->id ? 'selected' : '' }}>
+                                {{ $u->nombre }} ({{ $u->permission_id == 1 ? 'Admin' : 'Operador' }})
+                            </option>
+                        @endforeach
+                    </select>
+                </form>
             </div>
 
             <div class="flex items-center gap-6">
-                <div class="flex gap-4 border-r border-slate-200 pr-6">
-                    <button class="relative text-slate-400 hover:text-indigo-600 transition-colors">
-                        <i class="far fa-bell text-xl"></i>
-                        <span class="absolute -top-1 -right-1 h-2 w-2 bg-rose-500 rounded-full"></span>
-                    </button>
-                    <button class="text-slate-400 hover:text-indigo-600 transition-colors">
-                        <i class="far fa-comment-dots text-xl"></i>
-                    </button>
+                <div class="text-right hidden sm:block">
+                    <p class="text-sm font-bold text-slate-800">{{ $stats['usuario_nombre'] }}</p>
+                    <p class="text-[10px] text-indigo-600 font-black uppercase tracking-widest">
+                        {{ $stats['rol_actual'] }}</p>
                 </div>
-                <div class="flex items-center gap-3">
-                    <div class="text-right hidden sm:block">
-                        <p class="text-sm font-bold text-slate-800">Calde Dev</p>
-                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">SysAdmin</p>
-                    </div>
-                    <img src="https://ui-avatars.com/api/?name=Calde+Dev&background=4f46e5&color=fff"
-                        class="h-10 w-10 rounded-xl border-2 border-white shadow-md">
-                </div>
+                <img src="https://ui-avatars.com/api/?name={{ urlencode($stats['usuario_nombre']) }}&background=4f46e5&color=fff"
+                    class="h-10 w-10 rounded-xl border-2 border-white shadow-md">
             </div>
         </header>
 
@@ -118,15 +110,51 @@
                     <p class="text-slate-500 mt-1">Monitoreo en tiempo real de la seguridad operativa.</p>
                 </div>
                 <div class="flex gap-3">
-                    <button
-                        class="bg-white border border-slate-200 text-slate-700 font-bold py-2.5 px-5 rounded-xl hover:bg-slate-50 transition-all shadow-sm">
-                        <i class="fas fa-filter mr-2"></i> Filtros
-                    </button>
                     <a href="/api/incidentes/exportar"
-                        class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 px-6 rounded-xl shadow-lg shadow-indigo-100 flex items-center gap-2 transition-all hover:-translate-y-0.5">
-                        <i class="fas fa-file-excel"></i> Descargar Excel
+                        class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-6 rounded-xl shadow-lg shadow-emerald-100 flex items-center gap-2 transition-all hover:-translate-y-0.5">
+                        <i class="fas fa-file-excel text-lg"></i> Descargar Reporte Excel
                     </a>
                 </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm mb-8">
+                <form action="/" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                    <div>
+                        <label
+                            class="text-[10px] font-black text-slate-400 uppercase mb-2 block tracking-widest">Filtrar
+                            por Ubicación</label>
+                        <select name="planta"
+                            class="w-full bg-slate-50 border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 transition-all">
+                            <option value="">Todas las plantas</option>
+                            @foreach($plantas as $p)
+                                <option value="{{ $p->id }}" {{ request('planta') == $p->id ? 'selected' : '' }}>
+                                    {{ $p->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block tracking-widest">Desde
+                            la Fecha</label>
+                        <input type="date" name="desde" value="{{ request('desde') }}"
+                            class="w-full bg-slate-50 border-slate-200 rounded-xl text-sm text-slate-600">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block tracking-widest">Hasta
+                            la Fecha</label>
+                        <input type="date" name="hasta" value="{{ request('hasta') }}"
+                            class="w-full bg-slate-50 border-slate-200 rounded-xl text-sm text-slate-600">
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="submit"
+                            class="flex-1 bg-slate-800 text-white font-bold py-2.5 rounded-xl hover:bg-black transition-all">
+                            <i class="fas fa-filter mr-2"></i> Aplicar Filtros
+                        </button>
+                        <a href="/"
+                            class="px-4 py-2.5 bg-slate-100 text-slate-400 rounded-xl hover:bg-slate-200 transition-all">
+                            <i class="fas fa-undo"></i>
+                        </a>
+                    </div>
+                </form>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
@@ -135,7 +163,7 @@
                         class="absolute right-[-10px] top-[-10px] text-6xl text-slate-50 opacity-50 group-hover:scale-110 transition-transform">
                         <i class="fas fa-file-signature"></i>
                     </div>
-                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Total Reportes</p>
+                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Registros Visibles</p>
                     <h3 class="text-3xl font-black text-slate-800">{{ number_format($stats['total']) }}</h3>
                 </div>
 
@@ -192,14 +220,15 @@
                                     <td class="px-8 py-6">
                                         <div class="flex items-center gap-3">
                                             <div
-                                                class="h-8 w-8 rounded-full bg-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-500">
+                                                class="h-8 w-8 rounded-full bg-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-500 uppercase">
                                                 {{ substr($inc->empleado, 0, 2) }}
                                             </div>
                                             <div>
                                                 <p class="text-sm font-bold text-slate-800 leading-tight">
                                                     {{ $inc->empleado }}</p>
                                                 <p class="text-[10px] font-bold text-indigo-500 uppercase tracking-tighter">
-                                                    {{ $inc->especialidad ?? 'General' }}</p>
+                                                    {{ $inc->especialidad ?? 'Personal General' }}
+                                                </p>
                                             </div>
                                         </div>
                                     </td>
@@ -216,9 +245,11 @@
                                     </td>
                                     <td class="px-8 py-6 text-center">
                                         <p class="text-xs font-bold text-slate-700">
-                                            {{ date('d M', strtotime($inc->fecha_incidente)) }}</p>
+                                            {{ date('d M', strtotime($inc->fecha_incidente)) }}
+                                        </p>
                                         <p class="text-[10px] text-slate-400">
-                                            {{ date('H:i', strtotime($inc->fecha_incidente)) }} hrs</p>
+                                            {{ date('H:i', strtotime($inc->fecha_incidente)) }} hrs
+                                        </p>
                                     </td>
                                 </tr>
                             @endforeach
@@ -232,7 +263,6 @@
             </div>
         </div>
     </main>
-
 </body>
 
 </html>
